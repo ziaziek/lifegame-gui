@@ -22,7 +22,7 @@ public class SimulationGUIPresenter extends AreaPresenter{
 
     @Override
     public void printArea(final LifeArea area) {
-        //cleanPanel();
+        //resetPanel();
         final int n = area.getLifeFields().length;
         Graphics graphics = panel.getGraphics();
         final int width=panel.getWidth()-margin, height=panel.getHeight()-margin;
@@ -45,7 +45,7 @@ public class SimulationGUIPresenter extends AreaPresenter{
 
     }
 
-    public void cleanPanel() {
+    public void resetPanel() {
         panel.getGraphics().clearRect(0,0, panel.getWidth(), panel.getHeight());
         outlineDrawn=false;
     }

@@ -23,7 +23,7 @@ public class StartSimulationCallListener implements ActionListener {
         ConfigParams prams = configParamsHolder.createConfigParams();
         if(prams.validate()){
             try {
-                presenter.cleanPanel();
+                presenter.resetPanel();
                 LifeManager lifeManager=new LifeManager();
                 lifeManager.init(new RandomLifeInitiator(prams.getLifeProbability()), new DefaultRandomAreaInitiator(prams.getMaxFood()));
                 lifeManager.setPresenter(presenter);

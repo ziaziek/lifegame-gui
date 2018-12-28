@@ -2,6 +2,16 @@ public class ConfigParams {
 
     private int epochs;
 
+    public boolean isShowFood() {
+        return showFood;
+    }
+
+    public void setShowFood(boolean showFood) {
+        this.showFood = showFood;
+    }
+
+    private boolean showFood;
+
     public int getEpochs() {
         return epochs;
     }

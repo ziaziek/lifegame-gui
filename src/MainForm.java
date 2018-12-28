@@ -7,6 +7,7 @@ public class MainForm extends JFrame implements IConfigParamsHolder {
     JTextField tfNEpochs;
     JTextField tfLfprob;
     JTextField maxFood;
+    JCheckBox chckBoxShowFood;
 
 
     public MainForm(){
@@ -70,7 +71,10 @@ public class MainForm extends JFrame implements IConfigParamsHolder {
         GridLayout layout = new GridLayout(1, 5);
         panButton.setLayout(layout);
         btBtnRun = new JButton( "Run"  );
-        panButton.add(new JPanel());
+        JPanel showFood = new JPanel();
+        chckBoxShowFood = new JCheckBox("Show food");
+        showFood.add(chckBoxShowFood);
+        panButton.add(showFood);
         panButton.add(new JPanel());
         panButton.add(btBtnRun);
         panButton.add(new JPanel());
@@ -86,6 +90,7 @@ public class MainForm extends JFrame implements IConfigParamsHolder {
             params.setEpochs(Integer.valueOf(tfNEpochs.getText()));
             params.setLifeProbability(Integer.valueOf(tfLfprob.getText()));
             params.setMaxFood(Integer.valueOf(maxFood.getText()));
+            params.setShowFood(chckBoxShowFood.isSelected());
         } catch (Exception ex){
 
         }
