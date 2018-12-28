@@ -1,18 +1,16 @@
 import com.pncomp.lifegame.domain.LifeArea;
 import com.pncomp.lifegame.domain.LifeField;
 import com.pncomp.lifegame.presenters.AreaPresenter;
-
-import javax.swing.*;
 import java.awt.*;
 
 public class SimulationGUIPresenter extends AreaPresenter{
 
-    public JPanel getPanel() {
+    public Component getPanel() {
         return panel;
     }
 
-    final private JPanel panel;
-    final private int margin = 10;
+    final private Component panel;
+    final private int margin = 1;
     private boolean outlineDrawn;
     private int maxMaxFood;
 
@@ -22,7 +20,7 @@ public class SimulationGUIPresenter extends AreaPresenter{
 
     private boolean showFood;
 
-    public SimulationGUIPresenter(JPanel panel){
+    public SimulationGUIPresenter(Component panel){
         this.panel = panel;
     }
 

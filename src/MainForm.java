@@ -3,11 +3,12 @@ import java.awt.*;
 
 public class MainForm extends JFrame implements IConfigParamsHolder {
 
-    JPanel pnPanSim, pnPanParams;
+    JPanel  pnPanParams;
     JTextField tfNEpochs;
     JTextField tfLfprob;
     JTextField maxFood;
     JCheckBox chckBoxShowFood;
+    Component pnCanvasSim;
 
 
     public MainForm(){
@@ -22,9 +23,14 @@ public class MainForm extends JFrame implements IConfigParamsHolder {
     }
 
     JPanel getSimulationPanel(){
-        pnPanSim = new JPanel();
+        JPanel pnPanSim = new JPanel();
+        pnCanvasSim = new Canvas();
+        pnCanvasSim.setSize(999, 999);
+        pnCanvasSim.setBackground(Color.white);
         pnPanSim.setBorder( BorderFactory.createTitledBorder( "Simulation" ) );
+        pnPanSim.setLayout(new BorderLayout());
         pnPanSim.setSize(1000, 1000);
+        pnPanSim.add(pnCanvasSim, BorderLayout.CENTER);
         return pnPanSim;
     }
 
@@ -79,7 +85,7 @@ public class MainForm extends JFrame implements IConfigParamsHolder {
         panButton.add(btBtnRun);
         panButton.add(new JPanel());
         panButton.add(new JPanel());
-        btBtnRun.addActionListener(new StartSimulationCallListener(pnPanSim, this));
+        btBtnRun.addActionListener(new StartSimulationCallListener(pnCanvasSim, this));
         return  panButton;
     }
 
