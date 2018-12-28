@@ -11,9 +11,16 @@ public class SimulationGUIPresenter extends AreaPresenter{
         return panel;
     }
 
-    final JPanel panel;
-    final int margin = 10;
-    boolean outlineDrawn;
+    final private JPanel panel;
+    final private int margin = 10;
+    private boolean outlineDrawn;
+    private int maxMaxFood;
+
+    public void setShowFood(boolean showFood) {
+        this.showFood = showFood;
+    }
+
+    private boolean showFood;
 
     public SimulationGUIPresenter(JPanel panel){
         this.panel = panel;
@@ -22,13 +29,15 @@ public class SimulationGUIPresenter extends AreaPresenter{
 
     @Override
     public void printArea(final LifeArea area) {
-        //resetPanel();
+
         final int n = area.getLifeFields().length;
         Graphics graphics = panel.getGraphics();
         final int width=panel.getWidth()-margin, height=panel.getHeight()-margin;
+        final int singleWidth = width/n, singleHeight=height/n;
+
         graphics.setColor(Color.black);
         graphics.drawRect(margin,margin, panel.getWidth()-2*margin, panel.getHeight()-2*margin);
-        final int singleWidth = width/n, singleHeight=height/n;
+
         if(!outlineDrawn){
             drawAreaOutlines(n, graphics, width, height, singleWidth, singleHeight);
             outlineDrawn=true;
@@ -48,6 +57,7 @@ public class SimulationGUIPresenter extends AreaPresenter{
     public void resetPanel() {
         panel.getGraphics().clearRect(0,0, panel.getWidth(), panel.getHeight());
         outlineDrawn=false;
+        showFood=false;
     }
 
     public void showValidationErrorMessage(){
@@ -57,11 +67,22 @@ public class SimulationGUIPresenter extends AreaPresenter{
     }
 
     private void drawAreaCellsDetails(LifeArea area, int n) {
+        maxMaxFood = findMaxFoodOnArea(area);
         for(int i=0; i<area.getLifeFields().length; i++){
             for(int j=0; j<area.getLifeFields()[0].length; j++){
                 drawCellDetails(i,j,n, area.getLifeFields()[i][j]);
             }
         }
+    }
+
+    private int findMaxFoodOnArea(LifeArea area) {
+        int mx = 0;
+        for(int i=0; i<area.getLifeFields().length; i++){
+            for(int j=0; j<area.getLifeFields()[0].length; j++){
+                mx = Math.max(mx, area.getLifeFields()[i][j].getMaxFood());
+            }
+        }
+        return mx;
     }
 
     private void drawAreaOutlines(int n, Graphics graphics, int width, int height, int singleWidth, int singleHeight) {
@@ -75,16 +96,21 @@ public class SimulationGUIPresenter extends AreaPresenter{
     }
 
 
-    public void drawCellDetails(final int x, final int y, final int n, LifeField field){
+    protected void drawCellDetails(final int x, final int y, final int n, final LifeField field){
+
         Graphics graphics = panel.getGraphics();
         Cell c = calcGraphicsCoordinates(x, y, n);
+        final int m = 1;
+
+        if(showFood){
+            graphics.setColor(cellFoodColor(field, maxMaxFood));
+            graphics.fillRect(c.getX1()+1,c.getY1()+1, c.getCellWidth()-m, c.getCellHeight()-m);
+        }
+
         if(field.getOrg()!=null){
             graphics.setColor(Color.black);
             final int arcRadius = 3*Math.min((c.getX()-c.getX1()),(c.getY()-c.getY1()))/4;
             graphics.fillArc(c.getX()-arcRadius, c.getY()-arcRadius, 2*arcRadius, 2*arcRadius, 0, 360);
-        } else {
-            final int m = 1;
-            graphics.clearRect(c.getX1()+1,c.getY1()+1, c.getCellWidth()-m, c.getCellHeight()-m);
         }
 
     }
@@ -100,6 +126,15 @@ public class SimulationGUIPresenter extends AreaPresenter{
         r.setX((r.getX2()+r.getX1())/2);
         r.setY((r.getY1()+r.getY2())/2);
         return r;
+    }
+
+    protected Color cellFoodColor(final LifeField field, final int maxFood){
+
+        final Color[] colors = {Color.white, Color.pink, Color.YELLOW, Color.GREEN};
+        final int nscale = Math.min(maxFood, 3);
+
+        return colors[nscale * field.getFood()/maxFood];
+
     }
 
 }

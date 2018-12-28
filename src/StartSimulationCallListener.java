@@ -20,14 +20,15 @@ public class StartSimulationCallListener implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        ConfigParams prams = configParamsHolder.createConfigParams();
-        if(prams.validate()){
+        ConfigParams params = configParamsHolder.createConfigParams();
+        if(params.validate()){
             try {
                 presenter.resetPanel();
+                presenter.setShowFood(params.isShowFood());
                 LifeManager lifeManager=new LifeManager();
-                lifeManager.init(new RandomLifeInitiator(prams.getLifeProbability()), new DefaultRandomAreaInitiator(prams.getMaxFood()));
+                lifeManager.init(new RandomLifeInitiator(params.getLifeProbability()), new DefaultRandomAreaInitiator(params.getMaxFood()));
                 lifeManager.setPresenter(presenter);
-                lifeManager.run(prams.getEpochs(), new SimpleProliferator());
+                lifeManager.run(params.getEpochs(), new SimpleProliferator());
             } catch (Exception e1) {
                 e1.printStackTrace();
             }
