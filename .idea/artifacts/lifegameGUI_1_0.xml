@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="lifegameGUI_1.0">
+    <output-path>$PROJECT_DIR$/out/artifacts/lifegameGUI_1_0</output-path>
+    <root id="archive" name="lifegameGUI_1.0.jar">
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/META-INF/MANIFEST.MF" />
+      </element>
+    </root>
+  </artifact>
+</component>
