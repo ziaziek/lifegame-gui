@@ -68,6 +68,6 @@ public class Cell {
     }
 
     public int getCellHeight(){
-        return x2-x1;
+        return y2-y1;
     }
 }

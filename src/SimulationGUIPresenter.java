@@ -4,7 +4,6 @@ import com.pncomp.lifegame.presenters.AreaPresenter;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferStrategy;
 
 public class SimulationGUIPresenter extends AreaPresenter{
 
@@ -14,6 +13,7 @@ public class SimulationGUIPresenter extends AreaPresenter{
 
     final JPanel panel;
     final int margin = 10;
+    boolean outlineDrawn;
 
     public SimulationGUIPresenter(JPanel panel){
         this.panel = panel;
@@ -22,14 +22,18 @@ public class SimulationGUIPresenter extends AreaPresenter{
 
     @Override
     public void printArea(final LifeArea area) {
-        cleanPanel();
+        //cleanPanel();
         final int n = area.getLifeFields().length;
         Graphics graphics = panel.getGraphics();
         final int width=panel.getWidth()-margin, height=panel.getHeight()-margin;
         graphics.setColor(Color.black);
         graphics.drawRect(margin,margin, panel.getWidth()-2*margin, panel.getHeight()-2*margin);
         final int singleWidth = width/n, singleHeight=height/n;
-        drawAreaOutlines(n, graphics, width, height, singleWidth, singleHeight);
+        if(!outlineDrawn){
+            drawAreaOutlines(n, graphics, width, height, singleWidth, singleHeight);
+            outlineDrawn=true;
+        }
+
         drawAreaCellsDetails(area, n);
 
         panel.invalidate();
@@ -43,6 +47,7 @@ public class SimulationGUIPresenter extends AreaPresenter{
 
     public void cleanPanel() {
         panel.getGraphics().clearRect(0,0, panel.getWidth(), panel.getHeight());
+        outlineDrawn=false;
     }
 
     public void showValidationErrorMessage(){
@@ -72,10 +77,14 @@ public class SimulationGUIPresenter extends AreaPresenter{
 
     public void drawCellDetails(final int x, final int y, final int n, LifeField field){
         Graphics graphics = panel.getGraphics();
+        Cell c = calcGraphicsCoordinates(x, y, n);
         if(field.getOrg()!=null){
-            Cell c = calcGraphicsCoordinates(x, y, n);
+            graphics.setColor(Color.black);
             final int arcRadius = 3*Math.min((c.getX()-c.getX1()),(c.getY()-c.getY1()))/4;
             graphics.fillArc(c.getX()-arcRadius, c.getY()-arcRadius, 2*arcRadius, 2*arcRadius, 0, 360);
+        } else {
+            final int m = 1;
+            graphics.clearRect(c.getX1()+1,c.getY1()+1, c.getCellWidth()-m, c.getCellHeight()-m);
         }
 
     }
