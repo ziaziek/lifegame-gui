@@ -1,0 +1,4 @@
+Manifest-Version: 1.0
+Class-Path: lifegame_engine.jar
+Main-Class: Main
+

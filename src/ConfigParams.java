@@ -1,5 +1,15 @@
 public class ConfigParams {
 
+    public int getAreaSize() {
+        return areaSize;
+    }
+
+    public void setAreaSize(int areaSize) {
+        this.areaSize = areaSize;
+    }
+
+    private int areaSize;
+
     private int epochs;
 
     public boolean isShowFood() {

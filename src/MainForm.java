@@ -6,7 +6,7 @@ public class MainForm extends JFrame implements IConfigParamsHolder {
     JPanel  pnPanParams;
     JTextField tfNEpochs;
     JTextField tfLfprob;
-    JTextField maxFood;
+    JTextField maxFood, tfAreaSize;
     JCheckBox chckBoxShowFood;
     Component pnCanvasSim;
 
@@ -81,10 +81,16 @@ public class MainForm extends JFrame implements IConfigParamsHolder {
         chckBoxShowFood = new JCheckBox("Show food");
         showFood.add(chckBoxShowFood);
         panButton.add(showFood);
+
+        panButton.add(new JPanel());
+        JPanel panSize = new JPanel();
+        tfAreaSize =new MyTextField();
+        panSize.add(new JLabel("Area size: "));
+        panSize.add(tfAreaSize);
+        panButton.add(panSize);
+
         panButton.add(new JPanel());
         panButton.add(btBtnRun);
-        panButton.add(new JPanel());
-        panButton.add(new JPanel());
         btBtnRun.addActionListener(new StartSimulationCallListener(pnCanvasSim, this));
         return  panButton;
     }
@@ -97,6 +103,7 @@ public class MainForm extends JFrame implements IConfigParamsHolder {
             params.setLifeProbability(Integer.valueOf(tfLfprob.getText()));
             params.setMaxFood(Integer.valueOf(maxFood.getText()));
             params.setShowFood(chckBoxShowFood.isSelected());
+            params.setAreaSize(tfAreaSize.getText()!="" ? Integer.valueOf(tfAreaSize.getText()) : 0);
         } catch (Exception ex){
 
         }

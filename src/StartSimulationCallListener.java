@@ -1,6 +1,5 @@
 import com.pncomp.lifegame.LifeManager;
-import com.pncomp.lifegame.initiators.DefaultRandomAreaInitiator;
-import com.pncomp.lifegame.initiators.RandomLifeInitiator;
+import com.pncomp.lifegame.helpers.LifeManagerFactory;
 import com.pncomp.lifegame.proliferators.SimpleProliferator;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -24,8 +23,7 @@ public class StartSimulationCallListener implements ActionListener {
             try {
                 presenter.resetPanel();
                 presenter.setShowFood(params.isShowFood());
-                LifeManager lifeManager=new LifeManager();
-                lifeManager.init(new RandomLifeInitiator(params.getLifeProbability()), new DefaultRandomAreaInitiator(params.getMaxFood()));
+                LifeManager lifeManager= LifeManagerFactory.createLifeManager(params.getAreaSize(), params.getLifeProbability(), params.getMaxFood());
                 lifeManager.addSimulationListener(presenter);
                 lifeManager.run(params.getEpochs(), new SimpleProliferator());
             } catch (Exception e1) {
