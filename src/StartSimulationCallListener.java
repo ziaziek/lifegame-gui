@@ -26,7 +26,7 @@ public class StartSimulationCallListener implements ActionListener {
                 presenter.setShowFood(params.isShowFood());
                 LifeManager lifeManager=new LifeManager();
                 lifeManager.init(new RandomLifeInitiator(params.getLifeProbability()), new DefaultRandomAreaInitiator(params.getMaxFood()));
-                lifeManager.setPresenter(presenter);
+                lifeManager.addSimulationListener(presenter);
                 lifeManager.run(params.getEpochs(), new SimpleProliferator());
             } catch (Exception e1) {
                 e1.printStackTrace();

@@ -1,3 +1,5 @@
+import com.pncomp.lifegame.SimulationEvent;
+import com.pncomp.lifegame.SimulationEventType;
 import com.pncomp.lifegame.domain.LifeArea;
 import com.pncomp.lifegame.domain.LifeField;
 import com.pncomp.lifegame.presenters.AreaPresenter;
@@ -77,12 +79,6 @@ public class SimulationGUIPresenter extends AreaPresenter{
 
     }
 
-    public void resetPanel() {
-        panel.getGraphics().clearRect(0,0, panel.getWidth(), panel.getHeight());
-        outlineDrawn=false;
-        showFood=false;
-    }
-
     public void showValidationErrorMessage(){
         Graphics g = panel.getGraphics();
         g.setColor(Color.red);
@@ -131,10 +127,15 @@ public class SimulationGUIPresenter extends AreaPresenter{
 
         if(field.getOrg()!=null){
             graphics.setColor(Color.black);
-            final int arcRadius = 3*Math.min((c.getX()-c.getX1()),(c.getY()-c.getY1()))/4;
-            graphics.fillArc(c.getX()-arcRadius, c.getY()-arcRadius, 2*arcRadius, 2*arcRadius, 0, 360);
+        } else if(!showFood){
+            graphics.setColor(Color.white);
         }
+        drawOrClearOrganism(graphics, c);
+    }
 
+    private void drawOrClearOrganism(Graphics graphics, Cell c) {
+        final int arcRadius = 3*Math.min((c.getX()-c.getX1()),(c.getY()-c.getY1()))/4;
+        graphics.fillArc(c.getX()-arcRadius, c.getY()-arcRadius, 2*arcRadius, 2*arcRadius, 0, 360);
     }
 
     private Cell calcGraphicsCoordinates(final int x, final  int y, int n){
@@ -157,6 +158,21 @@ public class SimulationGUIPresenter extends AreaPresenter{
 
         return colors[nscale * field.getFood()/maxFood];
 
+    }
+
+    public void resetPanel(){
+
+        outlineDrawn=false;
+
+        if(strategy!=null){
+            strategy.dispose();
+            strategy=null;
+        }
+
+        Graphics g = panel.getGraphics();
+        g.setColor(Color.white);
+        g.drawRect(0,0, panel.getWidth(), panel.getHeight());
+        panel.invalidate();
     }
 
 }
