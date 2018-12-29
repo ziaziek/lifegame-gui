@@ -37,9 +37,15 @@ public class SimulationGUIPresenter extends AreaPresenter{
                 cv.createBufferStrategy(2);
                 strategy = cv.getBufferStrategy();
             }
-            Graphics g = strategy.getDrawGraphics();
-            renderArea(g, area, n);
-            g.dispose();
+            Graphics g=null;
+            try {
+                g =strategy.getDrawGraphics();
+                renderArea(g, area, n);
+            } finally {
+                if(g!=null){
+                    g.dispose();
+                }
+            }
             strategy.show();
         } else {
             renderArea(panel.getGraphics(), area, n);
