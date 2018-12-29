@@ -1,5 +1,3 @@
-import com.pncomp.lifegame.SimulationEvent;
-import com.pncomp.lifegame.SimulationEventType;
 import com.pncomp.lifegame.domain.LifeArea;
 import com.pncomp.lifegame.domain.LifeField;
 import com.pncomp.lifegame.presenters.AreaPresenter;
