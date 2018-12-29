@@ -2,6 +2,7 @@ import com.pncomp.lifegame.domain.LifeArea;
 import com.pncomp.lifegame.domain.LifeField;
 import com.pncomp.lifegame.presenters.AreaPresenter;
 import java.awt.*;
+import java.awt.image.BufferStrategy;
 
 public class SimulationGUIPresenter extends AreaPresenter{
 
@@ -13,6 +14,7 @@ public class SimulationGUIPresenter extends AreaPresenter{
     final private int margin = 1;
     private boolean outlineDrawn;
     private int maxMaxFood;
+    private BufferStrategy strategy;
 
     public void setShowFood(boolean showFood) {
         this.showFood = showFood;
@@ -29,7 +31,29 @@ public class SimulationGUIPresenter extends AreaPresenter{
     public void printArea(final LifeArea area) {
 
         final int n = area.getLifeFields().length;
-        Graphics graphics = panel.getGraphics();
+        if(panel instanceof  Canvas){
+            Canvas cv = (Canvas)panel;
+            if(strategy==null){
+                cv.createBufferStrategy(2);
+                strategy = cv.getBufferStrategy();
+            }
+            Graphics g = strategy.getDrawGraphics();
+            renderArea(g, area, n);
+            g.dispose();
+            strategy.show();
+        } else {
+            renderArea(panel.getGraphics(), area, n);
+        }
+
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void renderArea(Graphics graphics, LifeArea area, int n) {
+
         final int width=panel.getWidth()-margin, height=panel.getHeight()-margin;
         final int singleWidth = width/n, singleHeight=height/n;
 
@@ -41,14 +65,9 @@ public class SimulationGUIPresenter extends AreaPresenter{
             outlineDrawn=true;
         }
 
-        drawAreaCellsDetails(area, n);
+        drawAreaCellsDetails(area, n, graphics);
 
         panel.invalidate();
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
 
     }
 
@@ -64,11 +83,11 @@ public class SimulationGUIPresenter extends AreaPresenter{
         g.drawString("Validation error. Please check the values of the parameters entered.", 10, 50);
     }
 
-    private void drawAreaCellsDetails(LifeArea area, int n) {
+    private void drawAreaCellsDetails(LifeArea area, int n, final Graphics graphics) {
         maxMaxFood = findMaxFoodOnArea(area);
         for(int i=0; i<area.getLifeFields().length; i++){
             for(int j=0; j<area.getLifeFields()[0].length; j++){
-                drawCellDetails(i,j,n, area.getLifeFields()[i][j]);
+                drawCellDetails(i,j,n, area.getLifeFields()[i][j], graphics);
             }
         }
     }
@@ -94,9 +113,8 @@ public class SimulationGUIPresenter extends AreaPresenter{
     }
 
 
-    protected void drawCellDetails(final int x, final int y, final int n, final LifeField field){
+    protected void drawCellDetails(final int x, final int y, final int n, final LifeField field, final Graphics graphics){
 
-        Graphics graphics = panel.getGraphics();
         Cell c = calcGraphicsCoordinates(x, y, n);
         final int m = 1;
 
