@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="lifegame_engine_2_1">
-    <CLASSES>
-      <root url="jar://$PROJECT_DIR$/../lifegame/out/artifacts/lifegame_engine_2_1/lifegame_engine_2_1.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>

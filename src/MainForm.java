@@ -4,6 +4,7 @@ import com.pncomp.lifegame.SimulationEventType;
 
 import javax.swing.*;
 import java.awt.*;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 
 public class MainForm extends JFrame implements IConfigParamsHolder, ISimulationListener {
@@ -14,6 +15,7 @@ public class MainForm extends JFrame implements IConfigParamsHolder, ISimulation
     JTextField maxFood, tfAreaSize;
     JCheckBox chckBoxShowFood;
     JLabel lblNEpochs;
+    JButton btBtnRun;
     Component pnCanvasSim;
     int n_epoch=0;
 
@@ -80,7 +82,6 @@ public class MainForm extends JFrame implements IConfigParamsHolder, ISimulation
 
     private JPanel commandRunPanel(){
         JPanel panButton = new JPanel();
-        JButton btBtnRun;
         GridLayout layout = new GridLayout(1, 5);
         panButton.setLayout(layout);
         btBtnRun = new JButton( "Run"  );
@@ -124,11 +125,15 @@ public class MainForm extends JFrame implements IConfigParamsHolder, ISimulation
 
     @Override
     public void simulationChanged(SimulationEvent simulationEvent) {
-        if(SimulationEventType.EPOCH_RUN.equals(simulationEvent.getType())){
-            n_epoch++;
-            lblNEpochs.setText(String.valueOf(n_epoch));
-        } else if(SimulationEventType.START.equals(simulationEvent.getType())){
-            n_epoch=0;
-        }
+        n_epoch++;
+            if (SimulationEventType.EPOCH_RUN.equals(simulationEvent.getType())) {
+            } else if (SimulationEventType.START.equals(simulationEvent.getType())) {
+                n_epoch = 0;
+            } else if(SimulationEventType.FINISHED.equals(simulationEvent.getType())){
+                if(btBtnRun!=null){
+                    btBtnRun.setText("Run");
+                }
+            }
+        lblNEpochs.setText(String.valueOf(n_epoch));
     }
 }
