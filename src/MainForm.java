@@ -1,6 +1,7 @@
 import com.pncomp.lifegame.ISimulationListener;
 import com.pncomp.lifegame.SimulationEvent;
 import com.pncomp.lifegame.SimulationEventType;
+import com.pncomp.lifegame.helpers.LifeAreaHelper;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,7 +14,7 @@ public class MainForm extends JFrame implements IConfigParamsHolder, ISimulation
     JTextField tfLfprob;
     JTextField maxFood, tfAreaSize;
     JCheckBox chckBoxShowFood;
-    JLabel lblNEpochs;
+    JLabel lblNEpochs, lblNOrg;
     JButton btBtnRun;
     Component pnCanvasSim;
     int n_epoch=0;
@@ -24,7 +25,7 @@ public class MainForm extends JFrame implements IConfigParamsHolder, ISimulation
         setLayout(new BorderLayout());
         setTitle("Life game simulator");
 
-        setPreferredSize(new Dimension(1350, 1200));
+        setPreferredSize(new Dimension(1400, 1200));
         add(getSimulationPanel(), BorderLayout.CENTER);
         add(getHeaderPanel(), BorderLayout.NORTH);
         pack();
@@ -53,13 +54,18 @@ public class MainForm extends JFrame implements IConfigParamsHolder, ISimulation
         JPanel statsPanel = new JPanel();
         statsPanel.setLayout(new GridLayout(2, 1));
         statsPanel.setBorder(BorderFactory.createTitledBorder("Statistics"));
+
         JPanel panNEpochs = new JPanel();
         lblNEpochs = new JLabel("0");
         panNEpochs.add(new JLabel("Epoch: "));
         panNEpochs.add(lblNEpochs);
         statsPanel.add(panNEpochs);
 
-        statsPanel.add(new JPanel());
+        JPanel panNOrg = new JPanel();
+        lblNOrg = new JLabel("0");
+        panNOrg.add(new JLabel("Organisms: "));
+        panNOrg.add(lblNOrg);
+        statsPanel.add(panNOrg);
 
         return statsPanel;
     }
@@ -151,6 +157,7 @@ public class MainForm extends JFrame implements IConfigParamsHolder, ISimulation
     public void simulationChanged(SimulationEvent simulationEvent) {
         n_epoch++;
             if (SimulationEventType.EPOCH_RUN.equals(simulationEvent.getType())) {
+                lblNOrg.setText(String.valueOf(LifeAreaHelper.numberOfOrganisms(simulationEvent.getArea())));
             } else if (SimulationEventType.START.equals(simulationEvent.getType())) {
                 n_epoch = 0;
             } else if(SimulationEventType.FINISHED.equals(simulationEvent.getType())){
