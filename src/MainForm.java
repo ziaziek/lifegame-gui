@@ -23,10 +23,10 @@ public class MainForm extends JFrame implements IConfigParamsHolder, ISimulation
     int n_epoch=0;
 
 
-    public MainForm(){
+    public MainForm(final String versionNumber){
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
-        setTitle("Life game simulator");
+        setTitle("Life game simulator "+ versionNumber);
 
         setPreferredSize(new Dimension(1400, 1200));
         add(getSimulationPanel(), BorderLayout.CENTER);
