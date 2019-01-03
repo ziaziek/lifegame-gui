@@ -78,6 +78,6 @@ public class ConfigParams {
     private int foodDecrease;
 
     public boolean validate(){
-        return lifeProbability>0 && maxFood>0;
+        return lifeProbability>0 && maxFood>0 && areaSize>1 && proliferatorsEnum!=null && epochs>0;
     }
 }

@@ -29,9 +29,9 @@ public class StartSimulationCallListener implements ActionListener {
             lifeManager.setGoSimulation(false);
             changeButtonText(e, "Run");
         } else {
-            changeButtonText(e, "Stop");
             ConfigParams params = configParamsHolder.createConfigParams();
             if(params.validate()){
+                changeButtonText(e, "Stop");
                 presenter.resetPanel();
                 presenter.setShowFood(params.isShowFood());
                 try {
