@@ -12,6 +12,16 @@ public class ConfigParams {
 
     private int epochs;
 
+    public ProliferatorsEnum getProliferatorsEnum() {
+        return proliferatorsEnum;
+    }
+
+    public void setProliferatorsEnum(ProliferatorsEnum proliferatorsEnum) {
+        this.proliferatorsEnum = proliferatorsEnum;
+    }
+
+    private ProliferatorsEnum proliferatorsEnum;
+
     public boolean isShowFood() {
         return showFood;
     }

@@ -17,6 +17,8 @@ public class MainForm extends JFrame implements IConfigParamsHolder, ISimulation
     JLabel lblNEpochs, lblNOrg;
     JButton btBtnRun;
     Component pnCanvasSim;
+    JComboBox<ProliferatorsEnum> cmbProliferator;
+
     int n_epoch=0;
 
 
@@ -119,7 +121,7 @@ public class MainForm extends JFrame implements IConfigParamsHolder, ISimulation
         pnPanParams.add(panSize);
 
         //2
-        pnPanParams.add(new JPanel());
+        pnPanParams.add(createProliferatorsCombo());
 
         //3
         btBtnRun = new JButton( "Run"  );
@@ -146,6 +148,7 @@ public class MainForm extends JFrame implements IConfigParamsHolder, ISimulation
             params.setMaxFood(Integer.valueOf(maxFood.getText()));
             params.setShowFood(chckBoxShowFood.isSelected());
             params.setAreaSize(tfAreaSize.getText()!="" ? Integer.valueOf(tfAreaSize.getText()) : 0);
+            params.setProliferatorsEnum((ProliferatorsEnum)cmbProliferator.getSelectedItem());
         } catch (Exception ex){
 
         }
@@ -166,5 +169,18 @@ public class MainForm extends JFrame implements IConfigParamsHolder, ISimulation
                 }
             }
         lblNEpochs.setText(String.valueOf(n_epoch));
+    }
+
+    private Component createProliferatorsCombo(){
+        cmbProliferator = new JComboBox<ProliferatorsEnum>();
+        cmbProliferator.setRenderer(new ListCellRenderer<ProliferatorsEnum>() {
+            @Override
+            public Component getListCellRendererComponent(JList<? extends ProliferatorsEnum> list, ProliferatorsEnum value, int index, boolean isSelected, boolean cellHasFocus) {
+                return new JLabel(value.description);
+            }
+        });
+        cmbProliferator.addItem(ProliferatorsEnum.DEFAULT_PROLIFERATOR);
+        cmbProliferator.addItem(ProliferatorsEnum.PAIR_PROLIFERATOR);
+        return cmbProliferator;
     }
 }
