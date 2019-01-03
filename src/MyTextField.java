@@ -7,7 +7,7 @@ public class MyTextField extends JTextField {
 
     public MyTextField(){
         init();
-    };
+    }
 
     public MyTextField(final String text){
         super(text);

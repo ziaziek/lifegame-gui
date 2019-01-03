@@ -1,7 +1,6 @@
 import com.pncomp.lifegame.ISimulationListener;
 import com.pncomp.lifegame.LifeManager;
 import com.pncomp.lifegame.helpers.LifeManagerFactory;
-import com.pncomp.lifegame.proliferators.SimpleProliferator;
 
 import javax.swing.*;
 import java.awt.Component;
@@ -39,9 +38,7 @@ public class StartSimulationCallListener implements ActionListener {
                     lifeManager = LifeManagerFactory.createLifeManager(params.getAreaSize(), params.getLifeProbability(), params.getMaxFood());
                     lifeManager.addSimulationListener(presenter);
                     simulationListeners.forEach(s -> lifeManager.addSimulationListener(s));
-                    simulationThread=new Thread(()->{
-                        lifeManager.run(params.getEpochs(), new SimpleProliferator());
-                    });
+                    simulationThread=new Thread(()-> lifeManager.run(params.getEpochs(), ProliferatorsEnum.Factory.createProliferator(params.getProliferatorsEnum())));
                     simulationThread.start();
                 } catch (Exception e1) {
                     e1.printStackTrace();

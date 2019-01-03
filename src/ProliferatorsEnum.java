@@ -1,11 +1,12 @@
+import com.pncomp.lifegame.proliferators.DefaultAdjacentFieldProliferator;
+import com.pncomp.lifegame.proliferators.PairProliferator;
 import com.pncomp.lifegame.proliferators.Proliferator;
-import com.pncomp.lifegame.proliferators.SimpleProliferator;
 
 public enum ProliferatorsEnum {
 
     DEFAULT_PROLIFERATOR("Simple Default"), PAIR_PROLIFERATOR("Simple Pair");
 
-    String description;
+    final String description;
 
     ProliferatorsEnum( String description){
         this.description=description;
@@ -16,9 +17,9 @@ public enum ProliferatorsEnum {
         public static Proliferator createProliferator(ProliferatorsEnum proliferatorsEnum){
             switch (proliferatorsEnum){
                 case DEFAULT_PROLIFERATOR:
-                    return new SimpleProliferator();
+                    return new DefaultAdjacentFieldProliferator();
                 case PAIR_PROLIFERATOR:
-                    return null;
+                    return new PairProliferator();
                     default:
                         return null;
 

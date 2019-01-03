@@ -6,6 +6,7 @@ import com.pncomp.lifegame.helpers.LifeAreaHelper;
 import javax.swing.*;
 import java.awt.*;
 import java.util.Arrays;
+import java.util.Objects;
 
 public class MainForm extends JFrame implements IConfigParamsHolder, ISimulationListener {
 
@@ -147,7 +148,7 @@ public class MainForm extends JFrame implements IConfigParamsHolder, ISimulation
             params.setLifeProbability(Integer.valueOf(tfLfprob.getText()));
             params.setMaxFood(Integer.valueOf(maxFood.getText()));
             params.setShowFood(chckBoxShowFood.isSelected());
-            params.setAreaSize(tfAreaSize.getText()!="" ? Integer.valueOf(tfAreaSize.getText()) : 0);
+            params.setAreaSize(!Objects.equals(tfAreaSize.getText(), "") ? Integer.valueOf(tfAreaSize.getText()) : 0);
             params.setProliferatorsEnum((ProliferatorsEnum)cmbProliferator.getSelectedItem());
         } catch (Exception ex){
 
@@ -172,13 +173,8 @@ public class MainForm extends JFrame implements IConfigParamsHolder, ISimulation
     }
 
     private Component createProliferatorsCombo(){
-        cmbProliferator = new JComboBox<ProliferatorsEnum>();
-        cmbProliferator.setRenderer(new ListCellRenderer<ProliferatorsEnum>() {
-            @Override
-            public Component getListCellRendererComponent(JList<? extends ProliferatorsEnum> list, ProliferatorsEnum value, int index, boolean isSelected, boolean cellHasFocus) {
-                return new JLabel(value.description);
-            }
-        });
+        cmbProliferator = new JComboBox<>();
+        cmbProliferator.setRenderer((list, value, index, isSelected, cellHasFocus) -> new JLabel(value.description));
         cmbProliferator.addItem(ProliferatorsEnum.DEFAULT_PROLIFERATOR);
         cmbProliferator.addItem(ProliferatorsEnum.PAIR_PROLIFERATOR);
         return cmbProliferator;
