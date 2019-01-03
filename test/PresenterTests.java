@@ -1,6 +1,7 @@
 import static org.junit.jupiter.api.Assertions.*;
 
 import com.pncomp.lifegame.domain.LifeField;
+import com.pncomp.lifegamegui.presenters.SimulationGUIPresenter;
 import org.junit.jupiter.api.Test;
 
 import javax.swing.*;
@@ -25,7 +26,7 @@ public class PresenterTests {
     }
 
 
-    class Presenter extends SimulationGUIPresenter{
+    class Presenter extends SimulationGUIPresenter {
 
 
         public Presenter(JPanel panel) {

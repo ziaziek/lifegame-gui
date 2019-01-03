@@ -1,3 +1,5 @@
+package com.pncomp.lifegamegui.domain;
+
 public class Cell {
 
     public Cell() {

@@ -1,3 +1,5 @@
+package com.pncomp.lifegamegui.enums;
+
 import com.pncomp.lifegame.proliferators.DefaultAdjacentFieldProliferator;
 import com.pncomp.lifegame.proliferators.PairProliferator;
 import com.pncomp.lifegame.proliferators.Proliferator;
@@ -5,6 +7,10 @@ import com.pncomp.lifegame.proliferators.Proliferator;
 public enum ProliferatorsEnum {
 
     DEFAULT_PROLIFERATOR("Simple Default"), PAIR_PROLIFERATOR("Simple Pair");
+
+    public String getDescription() {
+        return description;
+    }
 
     final String description;
 

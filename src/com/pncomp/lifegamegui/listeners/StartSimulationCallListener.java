@@ -1,6 +1,12 @@
+package com.pncomp.lifegamegui.listeners;
+
 import com.pncomp.lifegame.ISimulationListener;
 import com.pncomp.lifegame.LifeManager;
 import com.pncomp.lifegame.helpers.LifeManagerFactory;
+import com.pncomp.lifegamegui.config.ConfigParams;
+import com.pncomp.lifegamegui.config.IConfigParamsHolder;
+import com.pncomp.lifegamegui.enums.ProliferatorsEnum;
+import com.pncomp.lifegamegui.presenters.SimulationGUIPresenter;
 
 import javax.swing.*;
 import java.awt.Component;

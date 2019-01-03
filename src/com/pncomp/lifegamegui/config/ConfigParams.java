@@ -1,3 +1,7 @@
+package com.pncomp.lifegamegui.config;
+
+import com.pncomp.lifegamegui.enums.ProliferatorsEnum;
+
 public class ConfigParams {
 
     public int getAreaSize() {

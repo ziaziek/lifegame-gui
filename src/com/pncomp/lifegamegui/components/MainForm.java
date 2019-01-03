@@ -1,7 +1,14 @@
+package com.pncomp.lifegamegui.components;
+
 import com.pncomp.lifegame.ISimulationListener;
 import com.pncomp.lifegame.SimulationEvent;
 import com.pncomp.lifegame.SimulationEventType;
 import com.pncomp.lifegame.helpers.LifeAreaHelper;
+import com.pncomp.lifegamegui.components.MyTextField;
+import com.pncomp.lifegamegui.config.ConfigParams;
+import com.pncomp.lifegamegui.config.IConfigParamsHolder;
+import com.pncomp.lifegamegui.enums.ProliferatorsEnum;
+import com.pncomp.lifegamegui.listeners.StartSimulationCallListener;
 
 import javax.swing.*;
 import java.awt.*;
@@ -174,7 +181,7 @@ public class MainForm extends JFrame implements IConfigParamsHolder, ISimulation
 
     private Component createProliferatorsCombo(){
         cmbProliferator = new JComboBox<>();
-        cmbProliferator.setRenderer((list, value, index, isSelected, cellHasFocus) -> new JLabel(value.description));
+        cmbProliferator.setRenderer((list, value, index, isSelected, cellHasFocus) -> new JLabel(value.getDescription()));
         cmbProliferator.addItem(ProliferatorsEnum.DEFAULT_PROLIFERATOR);
         cmbProliferator.addItem(ProliferatorsEnum.PAIR_PROLIFERATOR);
         return cmbProliferator;

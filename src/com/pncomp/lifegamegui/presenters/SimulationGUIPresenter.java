@@ -1,6 +1,10 @@
+package com.pncomp.lifegamegui.presenters;
+
 import com.pncomp.lifegame.domain.LifeArea;
 import com.pncomp.lifegame.domain.LifeField;
 import com.pncomp.lifegame.presenters.AreaPresenter;
+import com.pncomp.lifegamegui.domain.Cell;
+
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 

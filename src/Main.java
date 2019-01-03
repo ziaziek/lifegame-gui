@@ -1,3 +1,5 @@
+import com.pncomp.lifegamegui.components.MainForm;
+
 import javax.swing.*;
 
 public class Main {
