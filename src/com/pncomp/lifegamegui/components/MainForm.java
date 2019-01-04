@@ -51,8 +51,7 @@ public class MainForm extends JFrame implements IConfigParamsHolder, ISimulation
     JPanel getSimulationPanel(){
         JPanel pnPanSim = new JPanel();
         pnCanvasSim = new Canvas();
-        pnCanvasSim.setSize(999, 999);
-        pnCanvasSim.setBackground(Color.white);
+        pnCanvasSim.setSize(998, 998);
         pnPanSim.setBorder( BorderFactory.createTitledBorder( "Simulation" ) );
         pnPanSim.setLayout(new BorderLayout());
         pnPanSim.setSize(1000, 1000);

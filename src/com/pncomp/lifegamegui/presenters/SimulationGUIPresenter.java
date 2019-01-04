@@ -1,5 +1,7 @@
 package com.pncomp.lifegamegui.presenters;
 
+import com.pncomp.lifegame.SimulationEvent;
+import com.pncomp.lifegame.SimulationEventType;
 import com.pncomp.lifegame.domain.LifeArea;
 import com.pncomp.lifegame.domain.LifeField;
 import com.pncomp.lifegame.presenters.AreaPresenter;
@@ -19,6 +21,7 @@ public class SimulationGUIPresenter extends AreaPresenter{
     private boolean outlineDrawn;
     private int maxMaxFood;
     private BufferStrategy strategy;
+    int singleWidth, singleHeight;
 
     public void setShowFood(boolean showFood) {
         this.showFood = showFood;
@@ -64,22 +67,19 @@ public class SimulationGUIPresenter extends AreaPresenter{
 
     private void renderArea(Graphics graphics, LifeArea area, int n) {
 
-        final int width=panel.getWidth()-margin, height=panel.getHeight()-margin;
-        final int singleWidth = width/n, singleHeight=height/n;
-
-        graphics.setColor(Color.black);
-        graphics.drawRect(margin,margin, panel.getWidth()-2*margin, panel.getHeight()-2*margin);
+        int width=panel.getWidth()-1, height=panel.getHeight()-1;
+        singleWidth = width/n; singleHeight=height/n;
 
         if(!outlineDrawn){
-            drawAreaOutlines(n, graphics, width, height, singleWidth, singleHeight);
+            drawAreaOutlines(n, graphics, singleWidth, singleHeight);
             outlineDrawn=true;
         }
 
         drawAreaCellsDetails(area, n, graphics);
 
         panel.invalidate();
-
     }
+
 
     public void showValidationErrorMessage(){
         Graphics g = panel.getGraphics();
@@ -106,20 +106,23 @@ public class SimulationGUIPresenter extends AreaPresenter{
         return mx;
     }
 
-    private void drawAreaOutlines(int n, Graphics graphics, int width, int height, int singleWidth, int singleHeight) {
-        for (int i=0; i<n; i++){
-            final int x = margin+i*singleWidth, y = margin+i*singleHeight;
-            if(i>0){
-                graphics.drawLine(x, margin, x, height);
-                graphics.drawLine(margin, y, width, y);
-            }
+    private void drawAreaOutlines(int n, Graphics graphics, int singleWidth, int singleHeight) {
+        graphics.setColor(Color.black);
+        graphics.drawRect(0,0, singleWidth*n, singleHeight*n);
+        graphics.setColor(Color.white);
+        graphics.fillRect(1,1, singleWidth*n-1, singleHeight*n-1);
+        graphics.setColor(Color.black);
+        for (int i=1; i<n; i++){
+            final int x =i*singleWidth, y = i*singleHeight;
+            graphics.drawLine(x, 0, x, singleHeight*n);
+            graphics.drawLine(0, y, singleWidth*n, y);
         }
     }
 
 
     protected void drawCellDetails(final int x, final int y, final int n, final LifeField field, final Graphics graphics){
 
-        Cell c = calcGraphicsCoordinates(x, y, n);
+        Cell c = calcGraphicsCoordinates(x, y);
         final int m = 1;
 
         if(showFood){
@@ -140,12 +143,12 @@ public class SimulationGUIPresenter extends AreaPresenter{
         graphics.fillArc(c.getX()-arcRadius, c.getY()-arcRadius, 2*arcRadius, 2*arcRadius, 0, 360);
     }
 
-    private Cell calcGraphicsCoordinates(final int x, final  int y, int n){
+    private Cell calcGraphicsCoordinates(final int x, final  int y){
         Cell r = new Cell();
-        int xr = (panel.getWidth()-margin)/n;
-        int yr = (panel.getHeight()-margin)/n;
-        r.setX1(margin+x*xr);
-        r.setY1(margin + y*yr);
+        int xr = singleWidth;
+        int yr = singleHeight;
+        r.setX1(x*xr);
+        r.setY1(y*yr);
         r.setX2(r.getX1()+xr);
         r.setY2(r.getY1()+yr);
         r.setX((r.getX2()+r.getX1())/2);
@@ -173,7 +176,7 @@ public class SimulationGUIPresenter extends AreaPresenter{
 
         Graphics g = panel.getGraphics();
         g.setColor(Color.white);
-        g.drawRect(0,0, panel.getWidth(), panel.getHeight());
+        g.drawRect(0,0, panel.getWidth()-1, panel.getHeight()-1);
         panel.invalidate();
     }
 
